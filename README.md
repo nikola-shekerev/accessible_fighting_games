@@ -18,9 +18,11 @@ My method is not meant to be used online competitively against real people. But 
 
 # How it works
 
-This project uses a tool called [autohotkey](https://www.autohotkey.com/) , please install it and maybe check its guide to have some idea how it works.
+This project uses a tool called [autohotkey](https://www.autohotkey.com/) , please install it and quickly check its introduction to have some idea how it works.
 
 This project contains sample scripts for autohotkey. In this readme I will examine a number of code snippets in order to teach you to create your own scripts for your character in your fighting game. This project is a very detailed tutorial / guide, but you need to do some very basic coding for your specific character from your 
+
+This readme is detailed, but it will not explain concepts that are general for programming like variables, value assignment, commands, events, etc
 
 ## Controls
 
@@ -59,6 +61,18 @@ return
 ```
 
 This is a basic hotkey. It will execude some autohotkey code when you press the "k" key. Later we will have all special moves in our fighting game as such hotkeys
+
+## Send key strokes
+
+Lets assume we want to automate a move that is "back - down - forward - high punch" using the variables from the beginning of the readme. This is how it will look
+
+```
+k::
+Send, {%b% down}{%b% up}{%d% down}{%d% up}{%f% down}{%f% up}{%hp% down}{%hp% up}
+return
+```
+
+The `Send` command sends events for pressing and releaseing keys. You can use variables by surrounding them with the % symbol
 
 ## Left and Right
 
@@ -101,3 +115,63 @@ return
 ; code for my special move when my character looks left
 return
 ```
+
+## Set proper direction
+
+```
+~d & k::
+b := l
+f := r
+; code for my special move when my character looks right
+return
+
+~a & k::
+b := r
+f := l
+; code for my special move when my character looks left
+return
+```
+
+In the code above, we set our proper direction
+
+## Send key strokes
+
+Remember how we automated "back - down - forward - high punch" a while ago? Here it is now:
+
+```
+~d & k::
+b := l
+f := r
+Send, {%b% down}{%b% up}{%d% down}{%d% up}{%f% down}{%f% up}{%hp% down}{%hp% up}
+return
+
+~a & k::
+b := r
+f := l
+Send, {%b% down}{%b% up}{%d% down}{%d% up}{%f% down}{%f% up}{%hp% down}{%hp% up}
+return
+```
+
+## SetKeyDelay
+
+When we tell autohotkey to press a key, we want it to hold it for a bit of time. When we tell autohotkey to press a sequence of keys, we want it to wait some time between presses. In the same time, we want thise times to be minimal so our hotkeys fire quickly. 
+
+`SetKeyDelay, 30, 30` sets these times to 30 miliseconds
+
+```
+~d & k::
+SetKeyDelay, 30, 30
+b := l
+f := r
+Send, {%b% down}{%b% up}{%d% down}{%d% up}{%f% down}{%f% up}{%hp% down}{%hp% up}
+return
+
+~a & k::
+SetKeyDelay, 30, 30
+b := r
+f := l
+Send, {%b% down}{%b% up}{%d% down}{%d% up}{%f% down}{%f% up}{%hp% down}{%hp% up}
+return
+```
+
+Some games may require longer times. If your special move do not always trigger, increase the number
