@@ -72,7 +72,7 @@ Send, {%b% down}{%b% up}{%d% down}{%d% up}{%f% down}{%f% up}{%hp% down}{%hp% up}
 return
 ```
 
-The `Send` command sends events for pressing and releaseing keys. You can use variables by surrounding them with the % symbol
+The `Send` command sends events for pressing and releaseing keys. You can use variables by surrounding them with the % symbol. the words down and up mean pressing and releasing a key respectively
 
 ## Left and Right
 
@@ -197,3 +197,94 @@ f := l
 Send, {%b% down}{%b% up}{%d% down}{%d% up}{%f% down}{%f% up}{%hp% down}{%hp% up}
 return
 ```
+
+## Hold 2 keys in Send Command
+
+Sometimes you need to hold 2 keys in the same time. In some games those keys need to be directions to simulate diagonals. This can be achievend by being creative with pressing and releasing keys
+
+Let us automate this move "down - diagonal - forward - simultaneously high and low punch"
+
+```
+k::
+Send, {%d% down}{%f% down}{%d% up}{%f% up}{%hp% down}{%lp% down}{%lp% up}{%hp% up}
+return
+```
+
+## Modifiers
+
+In some games a modifier key changes a special move. For example in Mortal Kombat 9 and the next games in the series, you can use block to enhance a move. For example the move "down - forward - front punch" can be enhanced into a more powerful version of the same move "down - forward - simultaneous press of block and front punch"
+
+We want to achieve this variety without having special keys for both variations. Here is how we can do it:
+
+```
+~d & k::
+SetKeyDelay, 30, 30
+Send, {d up}
+b := l
+f := r
+if GetKeyState("Shift")
+  Send, {%d% down}{%d% up}{%f% down}{%f% up}{%bl% down}{%fp% down}{%fp% up}{%bl% up}
+else
+  Send, {%d% down}{%d% up}{%f% down}{%f% up}{%fp% down}{%fp% up}
+return
+
+~a & k::
+SetKeyDelay, 30, 30
+Send, {a up}
+b := r
+f := l
+if GetKeyState("Shift")
+  Send, {%d% down}{%d% up}{%f% down}{%f% up}{%bl% down}{%fp% down}{%fp% up}{%bl% up}
+else
+  Send, {%d% down}{%d% up}{%f% down}{%f% up}{%fp% down}{%fp% up}
+return
+```
+In the code above we use an if statement. It checks if a modifier key is held. In our example this is Shift. If Shift is held, we send the complex variation of the special move. If Shift is not held, we send the simpler variation of the special move.
+
+In this way we have a bigger variation of special moves, assigned to fewer keys
+
+## Attack Strings
+
+The lessons from this readme work for strings of attack buttons as well, not only direactions
+
+The following code automates "front punch - back punch - simultaneously back direction and front punch"
+
+```
+~a & Numpad7::
+SetKeyDelay, 30, 30
+Send, {a up}
+b := r
+f := l
+SetKeyDelay, 30, 30
+Send, {%fp% down}{%fp% up}{%bp% down}{%bp% up}{%b% down}{%fp% down}{%fp% up}{%b% up}
+return
+
+~d & Numpad7::
+SetKeyDelay, 30, 30
+Send, {d up}
+b := l
+f := r
+SetKeyDelay, 30, 30
+Send, {%fp% down}{%fp% up}{%bp% down}{%bp% up}{%b% down}{%fp% down}{%fp% up}{%b% up}
+return
+```
+
+## Symmetric Moves
+
+Some attacks in some fighting games are symmetric and do not depend if the character looks left or right. For example Sektor in MK9 has an upward rocket that falls in front or behind the enemy.
+
+```
+;up behind missile
+PgDn::
+SetKeyDelay, 30, 30
+Send, {%d% down}{%d% up}{%l% down}{%l% up}{%r% down}{%r% up}{%fk% down}{%fk% up}
+return
+
+;up front missile
+Del::
+SetKeyDelay, 30, 30
+Send, {%d% down}{%d% up}{%r% down}{%r% up}{%l% down}{%l% up}{%fk% down}{%fk% up}
+return
+```
+
+In such moves we can use variables for left and right direactly instead of forward and backward
