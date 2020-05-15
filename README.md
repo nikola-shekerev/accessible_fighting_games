@@ -18,6 +18,86 @@ My method is not meant to be used online competitively against real people. But 
 
 # How it works
 
-This project uses a tool called [autohotkey](https://www.autohotkey.com/) , please install it.
+This project uses a tool called [autohotkey](https://www.autohotkey.com/) , please install it and maybe check its guide to have some idea how it works.
 
-This project contains sample scripts for autohotkey. In this readme I will examine a number of code snippets in order to teach you to create your own scripts for your character in your fighting game.
+This project contains sample scripts for autohotkey. In this readme I will examine a number of code snippets in order to teach you to create your own scripts for your character in your fighting game. This project is a very detailed tutorial / guide, but you need to do some very basic coding for your specific character from your 
+
+## Controls
+
+```
+u := "Up"
+d := "Down"
+l := "Left"
+r := "Right"
+b := "Left"
+f := "Right"
+hp := "o"
+lp := "k"
+hk := "p"
+lk := "l"
+bl := "Space"
+```
+
+With the code above we create variables for our controls. This will allow us later to write commands that look like "f f hp" (forward - forward - high punch) instead of "some key - some key - some other key". This will make our scripts easier to read and debug.
+
+Here is [a list of available keys](https://www.autohotkey.com/docs/KeyList.htm)
+
+## Comments
+
+```
+; This is a comment
+```
+
+Autohotkey uses column for comments. Commenting your code will help you to read it later.
+
+## Basic Hotkey
+
+```
+k::
+; some autohotkey code
+return
+```
+
+This is a basic hotkey. It will execude some autohotkey code when you press the "k" key. Later we will have all special moves in our fighting game as such hotkeys
+
+## Left and Right
+
+Autohotkey does not interact with the game process, so it does not know if your character faces left or right. On the other hand your moves depend on that - forward can be left or right.
+
+```
+l := "Left"
+r := "Right"
+b := "Left"
+f := "Right"
+```
+We have created variables for forward and backward but also for left and right. They are the same only in the beginning.
+
+For simplicity, I assume that we use WASD keys for movement.
+
+## Basic Hotkey from 2 keys
+
+```
+d & k::
+; code for my special move when my character looks right
+return
+
+a & k::
+; code for my special move when my character looks left
+return
+```
+
+In the code above we have 2 variations of the same hotkey. If we press "d" and "k" keys in the same time, we will do the right variation of the "k" special move. If we press "a" and "k" keys in the same time, we will do the left variation of the "k" special move.
+
+## Blind Mode
+
+By default autohotkey blocks the native function of a hotkey. This means that in the example above the keys "d" and "a" (left and right) will stop working. To not block their in-game function we enable "Blind Mode"
+
+```
+~d & k::
+; code for my special move when my character looks right
+return
+
+~a & k::
+; code for my special move when my character looks left
+return
+```
