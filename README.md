@@ -104,7 +104,7 @@ In the code above we have 2 variations of the same hotkey. If we press "d" and "
 
 ## Blind Mode
 
-By default autohotkey blocks the native function of a hotkey. This means that in the example above the keys "d" and "a" (left and right) will stop working. To not block their in-game function we enable "Blind Mode"
+By default autohotkey blocks the native function of a hotkey. This means that in the example above the keys "d" and "a" (left and right) will stop working for actual moving. To not block their in-game function we enable "Blind Mode"
 
 ```
 ~d & k::
@@ -174,4 +174,26 @@ Send, {%b% down}{%b% up}{%d% down}{%d% up}{%f% down}{%f% up}{%hp% down}{%hp% up}
 return
 ```
 
-Some games may require longer times. If your special move do not always trigger, increase the number
+Some games may require longer times. If your special move do not always trigger properly, increase the number
+
+## Blind Mode Bugs
+
+Some but not all games have a problem with Blind mode. Sometimes the native event for releasing the a or d key will mess with the events from the Send command. If your special move do not always trigger properly, add the following release command:
+
+```
+~d & k::
+SetKeyDelay, 30, 30
+Send, {d up}
+b := l
+f := r
+Send, {%b% down}{%b% up}{%d% down}{%d% up}{%f% down}{%f% up}{%hp% down}{%hp% up}
+return
+
+~a & k::
+SetKeyDelay, 30, 30
+Send, {a up}
+b := r
+f := l
+Send, {%b% down}{%b% up}{%d% down}{%d% up}{%f% down}{%f% up}{%hp% down}{%hp% up}
+return
+```
