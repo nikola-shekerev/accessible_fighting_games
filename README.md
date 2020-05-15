@@ -20,7 +20,7 @@ My method is not meant to be used online competitively against real people. But 
 
 This project uses a tool called [autohotkey](https://www.autohotkey.com/) , please install it and quickly check its introduction to have some idea how it works.
 
-This project contains sample scripts for autohotkey. In this readme I will examine a number of code snippets in order to teach you to create your own scripts for your character in your fighting game. This project is a very detailed tutorial / guide, but you need to do some very basic coding for your specific character from your 
+This project contains sample scripts for autohotkey. In this readme I will examine a number of code snippets in order to teach you to create your own scripts for your character in your fighting game. This project is a very detailed tutorial / guide, but you need to do some very basic coding for your specific character from your favourite game
 
 This readme is detailed, but it will not explain concepts that are general for programming like variables, value assignment, commands, events, etc
 
@@ -274,13 +274,13 @@ return
 Some attacks in some fighting games are symmetric and do not depend if the character looks left or right. For example Sektor in MK9 has an upward rocket that falls in front or behind the enemy.
 
 ```
-;up behind missile
+;up missile on the right of enemy
 PgDn::
 SetKeyDelay, 30, 30
 Send, {%d% down}{%d% up}{%l% down}{%l% up}{%r% down}{%r% up}{%fk% down}{%fk% up}
 return
 
-;up front missile
+;up missile on the left of enemy
 Del::
 SetKeyDelay, 30, 30
 Send, {%d% down}{%d% up}{%r% down}{%r% up}{%l% down}{%l% up}{%fk% down}{%fk% up}
