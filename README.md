@@ -14,7 +14,7 @@ This project is for people with motor disabilities
 
 My method automates keyboard events on Operating System level. It does not interact with any game process, so you will not be detected as cheater and banned.
 
-My method is not meant to be used online competitively against real people. But if you do, you will quickly discover that this method is a fun way to enjoy a game, but it is not performant competitively
+My method is not meant to be used online competitively against real people. But if you do, you will quickly discover that this method is a fun way to enjoy a game, but it does not perform well competitively. A real player with a variety of combos will always defeat a script.
 
 # How it works
 
